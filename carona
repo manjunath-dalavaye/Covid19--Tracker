@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>COVID-19 Tracker</title>
+</head>
+<body>
+    <h1>COVID-19 Tracker</h1>
+    <div id="tracker">
+        <p>Loading...</p>
+    </div>
+
+    <script>
+        // Function to fetch and display COVID-19 data
+        async function fetchCovidData() {
+            const url = 'https://api.covid19api.com/summary'; // You can use other sources too
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const globalData = data.Global;
+                const tracker = document.getElementById('tracker');
+                tracker.innerHTML = `
+                    <p>Total Cases: ${globalData.TotalConfirmed}</p>
+                    <p>Total Deaths: ${globalData.TotalDeaths}</p>
+                    <p>Total Recovered: ${globalData.TotalRecovered}</p>
+                `;
+            } catch (error) {
+                console.error('Error fetching COVID-19 data:', error);
+                tracker.innerHTML = '<p>Failed to fetch data.</p>';
+            }
+        }
+
+        // Call the fetchCovidData function to load data
+        fetchCovidData();
+    </script>
+</body>
+</html>
